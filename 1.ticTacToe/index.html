@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
+    <!--
+        Tic tac toe v1.1
+        17.03.2023
+        Jan Grosicki | https://github.com/kenayv
+        
+        A simple Tic Tac Toe minigame game. This code may contain bugs or the solutions might be imperfect, however, making it perfect was not the point. That is my first web project that uses HTML+CSS+JS all together.
+
+        If you are for some reason interested in using, improving, editing or redistributing the code, feel free to do that.
+
+        Changes by V1.0{
+            * Added comment, that you are reading right now.
+            * .ticTacTable td:hover and .btn:hover had redundant code. They have been grouped in single selector.
+            * Changed checkForWin() function to return immediately after invoking victory(player) function because of a bug that made game end in a draw after 9 moves, whether or not anyone won.
+        }
+    -->
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,7 +24,7 @@
             content="This is a simple TicTacToe game. Basically, my a first JS project"
         />
         <title>TicTacToe</title>
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
     <body>
         <header>
@@ -26,6 +41,9 @@
                         '.' chars are put in table cells, so table won't
                         disform when some cells are empty and some are
                         filled with 'O' or 'X'.
+
+                        Designing the table as 9 divs in 3x3 layout might
+                        be a better idea.
                     -->
                     <tr>
                         <td id="cellOne">.</td>
@@ -50,7 +68,7 @@
                     <button class="btn">retry?</button>
                 </p>
             </section>
-            <p class="winMessage"> </p>
+            <p class="winMessage"></p>
         </main>
         <script src="script.js"></script>
     </body>

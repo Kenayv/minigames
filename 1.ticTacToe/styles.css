@@ -4,6 +4,7 @@ a {
     text-decoration: none;
     color: #f8f5fa;
 }
+
 body {
     font-family: "Press Start 2P", sans-serif;
     background-color: #222;
@@ -36,18 +37,17 @@ main {
     height: 300px;
     font-size: 5rem;
     text-align: center;
-    /*
-    '.' chars are put in table cells, so table won't
+    /* '.' chars are put in table cells, so table won't
     disform when some cells are empty and some are
     filled with 'O' or 'X'.
     
     color #222 property is there to hide existing 
-    '.' chars in the table.
-    */
+    '.' chars in the table. */
     color: #222;
 }
 
-.ticTacTable td:hover {
+.ticTacTable td:hover,
+.btn:hover {
     cursor: pointer;
 }
 
@@ -59,6 +59,7 @@ main {
     border: 3px solid #f8f5fa;
     border-left: none;
 }
+
 #cellSix {
     border: 3px solid #f8f5fa;
     border-right: none;
@@ -91,10 +92,6 @@ main {
     font-size: 2em;
     width: 8em;
     padding: 1em;
-}
-
-.btn:hover {
-    cursor: pointer;
 }
 
 .turn {

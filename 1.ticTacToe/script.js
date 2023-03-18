@@ -79,7 +79,7 @@ const victory = (str) => {
 };
 
 const checkForWin = function (player) {
-    /*check if anyone won:
+    /*check if anyone has won:
         - Is there any vertical line of 3 'O's or 'X's
         - Is there any horizontal line of 3 'O's or 'X's
         - Is there any diagonal line of 3 'O's or 'X's
@@ -120,8 +120,10 @@ const checkForWin = function (player) {
         (document.querySelector("#cellThree").textContent === player &&
             document.querySelector("#cellFive").textContent === player &&
             document.querySelector("#cellSeven").textContent === player)
-    )
+    ) {
         victory(player);
+        return;
+    }
 
     /*Check if the game ended in a draw
         -are all the cells in the table claimed?
@@ -136,8 +138,10 @@ const checkForWin = function (player) {
         document.querySelector("#cellSeven").textContent !== "." &&
         document.querySelector("#cellEight").textContent !== "." &&
         document.querySelector("#cellNine").textContent !== "."
-    )
+    ) {
         victory("draw");
+        return;
+    }
 };
 
 const handleClick = function (str) {
