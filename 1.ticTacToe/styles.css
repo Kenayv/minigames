@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
+
+a {
+    text-decoration: none;
+    color: #f8f5fa;
+}
+body {
+    font-family: "Press Start 2P", sans-serif;
+    background-color: #222;
+    color: #f8f5fa;
+    margin: 5%;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    height: 300px;
+}
+
+.gameField {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+}
+
+.ticTacTable {
+    border-collapse: collapse;
+    width: 300px;
+    height: 300px;
+    font-size: 5rem;
+    text-align: center;
+    /*
+    '.' chars are put in table cells, so table won't
+    disform when some cells are empty and some are
+    filled with 'O' or 'X'.
+    
+    color #222 property is there to hide existing 
+    '.' chars in the table.
+    */
+    color: #222;
+}
+
+.ticTacTable td:hover {
+    cursor: pointer;
+}
+
+#cellTwo {
+    border: 3px solid #f8f5fa;
+    border-top: none;
+}
+#cellFour {
+    border: 3px solid #f8f5fa;
+    border-left: none;
+}
+#cellSix {
+    border: 3px solid #f8f5fa;
+    border-right: none;
+}
+#cellEight {
+    border: 3px solid #f8f5fa;
+    border-bottom: none;
+}
+
+.turnButtonField {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 80%;
+}
+
+.message {
+    font-size: 2em;
+}
+
+.turnButtonElem {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    font-family: "Press Start 2P", sans-serif;
+    color: #222;
+    font-size: 2em;
+    width: 8em;
+    padding: 1em;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.turn {
+    margin-left: 1em;
+    color: aqua;
+}
+
+.winMessage {
+    display: flex;
+    margin: auto;
+    margin-top: 1em;
+    font-size: 5em;
+}

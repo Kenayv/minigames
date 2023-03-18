@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="This is a simple TicTacToe game. Basically, my a first JS project"
+        />
+        <title>TicTacToe</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header>
+            <a href="#"
+                ><h1>
+                    <span style="color: red">X</span> TicTacToe <span style="color: aqua">O</span>
+                </h1>
+            </a>
+        </header>
+        <main>
+            <section class="gameField">
+                <table class="ticTacTable">
+                    <!-- 
+                        '.' chars are put in table cells, so table won't
+                        disform when some cells are empty and some are
+                        filled with 'O' or 'X'.
+                    -->
+                    <tr>
+                        <td id="cellOne">.</td>
+                        <td id="cellTwo">.</td>
+                        <td id="cellThree">.</td>
+                    </tr>
+                    <tr>
+                        <td id="cellFour">.</td>
+                        <td id="cellFive">.</td>
+                        <td id="cellSix">.</td>
+                    </tr>
+                    <tr>
+                        <td id="cellSeven">.</td>
+                        <td id="cellEight">.</td>
+                        <td id="cellNine">.</td>
+                    </tr>
+                </table>
+            </section>
+            <section class="turnButtonField">
+                <p class="turnButtonElem message">turn: <span class="turn">O</span></p>
+                <p class="turnButtonElem">
+                    <button class="btn">retry?</button>
+                </p>
+            </section>
+            <p class="winMessage"> </p>
+        </main>
+        <script src="script.js"></script>
+    </body>
+</html>
