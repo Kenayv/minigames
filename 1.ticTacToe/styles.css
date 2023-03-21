@@ -105,3 +105,8 @@ main {
     margin-top: 1em;
     font-size: 5em;
 }
+
+/* Hides table cell elements when selected */
+.ticTacTable td::selection {
+    color: #222;
+}

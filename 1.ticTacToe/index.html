@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pl">
     <!--
-        Tic tac toe v1.1
-        17.03.2023
+        Tic tac toe v1.2
+        21.03.2023
         Jan Grosicki | https://github.com/kenayv
         
         A simple Tic Tac Toe minigame game. This code may contain bugs or the solutions might be imperfect, however, making it perfect was not the point. That is my first web project that uses HTML+CSS+JS all together.
 
         If you are for some reason interested in using, improving, editing or redistributing the code, feel free to do that.
 
-        Changes by V1.0{
-            * Added comment, that you are reading right now.
-            * .ticTacTable td:hover and .btn:hover had redundant code. They have been grouped in single selector.
-            * Changed checkForWin() function to return immediately after invoking victory(player) function because of a bug that made game end in a draw after 9 moves, whether or not anyone won.
+        Changes by V1.1{
+            * added '.ticTacTable td::selection' selector that hides table cell elements on selection
+            * Separated the logic to work strictly in JS.
+                * JS engine doesn't use html element's content as a reference anymore, but relies on it's cells and cellNames arrays to handle events and check for wins.
         }
     -->
     <head>
