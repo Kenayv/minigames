@@ -1,0 +1,111 @@
+@font-face {
+    /*
+    Font free ONLY for personal use!
+    https://www.dafont.com/poker.font
+    */
+    font-family: pokerFont;
+    src: url(assets/Poker.ttf);
+}
+body,
+html {
+    font-family: pokerFont;
+    height: 100%;
+    margin: 0;
+    background-image: url("assets/floor.jpg");
+}
+
+.background-tint {
+    background-color: #100d;
+    height: 100%;
+}
+
+.wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#black-jack {
+    width: 85%;
+    margin-top: 10%;
+}
+
+#game-table {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: url("assets/poker-table.jpg");
+    background-size: 400%;
+    padding: 3%;
+    height: 500px;
+    border: 5px solid #000;
+    border-radius: 5%;
+    -webkit-border-radius: 5%;
+    -moz-border-radius: 5%;
+    -ms-border-radius: 5%;
+    -o-border-radius: 5%;
+}
+
+.player {
+    display: flex;
+    padding-top: 5%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 3px solid #f1f1f1bb;
+    height: 45%;
+}
+
+.player .card,
+#deck {
+    display: none;
+    height: 42.5%;
+    margin: 2%;
+}
+
+#deck {
+    display: block;
+    margin: 0% 70%;
+}
+
+.btns-wrapper {
+    display: flex;
+    margin-top: 5%;
+    justify-content: space-around;
+}
+
+.btn {
+    font-family: "pokerFont", "Courier New", Courier, monospace;
+    font-size: 32px;
+    height: 90px;
+    width: 90px;
+    background-color: #25d53d;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn:active {
+    background-color: #03b31b;
+    transform: translateY(4px);
+}
+
+#btn-start {
+    width: 200px;
+    height: 75px;
+    font-size: 48px;
+    border-radius: 10%;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    -ms-border-radius: 10%;
+    -o-border-radius: 10%;
+}
+
+.hidden {
+    display: none;
+}

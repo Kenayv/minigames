@@ -68,9 +68,7 @@ const victory = (str) => {
 
 const checkForWin = function (player) {
     /*check if anyone has won:
-        - Is there any vertical line of 3 'O's or 'X's
-        - Is there any horizontal line of 3 'O's or 'X's
-        - Is there any diagonal line of 3 'O's or 'X's
+        - Is there any vertical, horizontal or diagonal line of 3 'O's or 'X's
     */
     if (
         //are there any Vertical wins?

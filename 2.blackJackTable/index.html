@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Black Jack Table</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div class="background-tint wrapper">
+            <main id="black-jack">
+                <article id="game-table">
+                    <section class="player" id="player-dealer">
+                        <img src="assets/cards/deck-of-cards.png" id="deck" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="dealer-card1" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="dealer-card2" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="dealer-card3" />
+                    </section>
+                    <section class="player" id="player-player">
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card1" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card2" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card3" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card4" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card5" />
+                        <img src="assets/cards/card-back.png" class="card hidden" id="player-card6" />
+                    </section>
+                </article>
+                <section class="btns-wrapper">
+                    <button class="btn" id="btn-start">Start</button>
+                    <button class="btn hidden" id="btn-hold">Hold</button>
+                    <button class="btn hidden" id="btn-hit">Hit</button>
+
+                    <!-- TO ADD LATER
+                        <button class="btn" id="hit-btn">pass</button>
+                        <button class="btn" id="hit-btn">Double-down</button>
+                    -->
+                </section>
+            </main>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
