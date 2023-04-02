@@ -1,6 +1,13 @@
+/*
+    02.04.2023, Jan Grosicki
+    Version 0.1 of Black jack game.
+    
+    * patch notes and more information in script.JS file.
+*/
+
 @font-face {
     /*
-    Font free ONLY for personal use!
+    Font free ONLY for non-commercial use!
     https://www.dafont.com/poker.font
     */
     font-family: pokerFont;
@@ -26,8 +33,10 @@ html {
 }
 
 #black-jack {
-    width: 85%;
-    margin-top: 10%;
+    width: 95%;
+    max-width: 365px;
+    min-width: 285px;
+    margin-top: 10px;
 }
 
 #game-table {
@@ -57,8 +66,7 @@ html {
 
 .player .card,
 #deck {
-    display: none;
-    height: 42.5%;
+    height: 100px;
     margin: 2%;
 }
 
@@ -106,6 +114,24 @@ html {
     -o-border-radius: 10%;
 }
 
+.pop-up-message {
+    position: absolute;
+    text-align: center;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 4em;
+    max-width: 350px;
+    max-height: 235px;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; /* Adds an outline to the text */
+    left: 50%;
+    top: 250px;
+    transform: translate(-50%, -25%);
+    -webkit-transform: translate(-50%, -25%);
+    -moz-transform: translate(-50%, -25%);
+    -ms-transform: translate(-50%, -25%);
+    -o-transform: translate(-50%, -25%);
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
