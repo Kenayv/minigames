@@ -147,7 +147,6 @@ function dealerDraw(cardNo) {
     cardNo.classList.remove("hidden");
     dealerCardCount++;
     if (dealerScore > 21) {
-        console.log("Dealer busted!");
         victoryScreen();
         return;
     }
@@ -158,6 +157,7 @@ function dealerDraw(cardNo) {
     hold();
 }
 
+// playerCard2,3,4,5,6 variables could be stored in an array!
 function hold() {
     if (!gameRunning) return;
     switch (dealerCardCount) {
@@ -189,6 +189,7 @@ function hitCard(cardNo) {
     playerCardCount++;
 }
 
+// playerCard2,3,4,5,6 variables could be stored in an array!
 function hit() {
     if (!gameRunning) return;
     switch (playerCardCount) {
