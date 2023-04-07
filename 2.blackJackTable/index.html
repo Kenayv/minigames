@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 <!--
-    02.04.2023, Jan Grosicki
-    Version 0.1 of Black jack game.
+    07.04.2023, Jan Grosicki
+    Version 0.2 of Black jack game.
     
     * patch notes and more information in script.JS file.
 -->
@@ -16,10 +16,11 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <div class="background-tint wrapper">
+        <div class="wrapper background-tint">
+            <span class="message" id="player-money">$ 0</span>
             <main id="black-jack">
                 <article id="game-table">
-                    <span class="pop-up-message"></span>
+                    <span id="pop-up" class="message"></span>
                     <section class="player" id="player-dealer">
                         <img src="assets/cards/deck-of-cards.png" id="deck" />
                         <img src="assets/cards/card-back.png" class="card hidden" id="dealer-card1" />
@@ -37,16 +38,20 @@
                         <img src="assets/cards/card-back.png" class="card hidden" id="player-card5" />
                         <img src="assets/cards/card-back.png" class="card hidden" id="player-card6" />
                     </section>
+                    <span class="message" id="bet">$ 0</span>
                 </article>
                 <section class="btns-wrapper">
-                    <button class="btn" id="btn-start">Start</button>
-                    <button class="btn hidden" id="btn-hold">Hold</button>
-                    <button class="btn hidden" id="btn-hit">Hit</button>
-
-                    <!-- TO ADD LATER
-                        <button class="btn" id="hit-btn">pass</button>
-                        <button class="btn" id="hit-btn">Double-down</button>
-                    -->
+                    <div>
+                        <!-- <button class="btn hidden" id="hit-pass">pass</button> -->
+                        <button class="btn" id="btn-p50">+50</button>
+                        <button class="btn" id="btn-m50">clear bet</button>
+                        <!-- <button class="btn hidden" id="btn-double">Double</button> -->
+                    </div>
+                    <div>
+                        <button class="btn" id="btn-start">Start</button>
+                        <button class="btn hidden" id="btn-hold">Hold</button>
+                        <button class="btn hidden" id="btn-hit">Hit</button>
+                    </div>
                 </section>
             </main>
         </div>

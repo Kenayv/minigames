@@ -1,6 +1,6 @@
 /*
-    02.04.2023, Jan Grosicki
-    Version 0.1 of Black jack game.
+    07.04.2023, Jan Grosicki
+    Version 0.2 of Black jack game.
     
     * patch notes and more information in script.JS file.
 */
@@ -23,10 +23,10 @@ html {
 
 .background-tint {
     background-color: #100d;
-    height: 100%;
 }
 
 .wrapper {
+    min-height: 750px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -77,15 +77,21 @@ html {
 
 .btns-wrapper {
     display: flex;
-    margin-top: 5%;
+    flex-wrap: wrap;
+}
+
+.btns-wrapper div {
+    margin-top: 2.5%;
+    width: 100%;
+    display: flex;
     justify-content: space-around;
 }
 
 .btn {
     font-family: "pokerFont", "Courier New", Courier, monospace;
-    font-size: 32px;
-    height: 90px;
-    width: 90px;
+    font-size: 1.5rem;
+    height: 100px;
+    width: 100px;
     background-color: #25d53d;
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -114,15 +120,20 @@ html {
     -o-border-radius: 10%;
 }
 
-.pop-up-message {
+.message {
+    color: #f1f1f1;
     position: absolute;
     text-align: center;
     word-wrap: break-word;
     overflow: hidden;
-    font-size: 4em;
+    font-size: 3em;
     max-width: 350px;
     max-height: 235px;
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; /* Adds an outline to the text */
+}
+
+#pop-up {
+    font-size: 4em;
     left: 50%;
     top: 250px;
     transform: translate(-50%, -25%);
@@ -130,6 +141,16 @@ html {
     -moz-transform: translate(-50%, -25%);
     -ms-transform: translate(-50%, -25%);
     -o-transform: translate(-50%, -25%);
+}
+
+#player-money {
+    text-align: center;
+    width: 100%;
+}
+
+#bet {
+    width: 100%;
+    top: 480px;
 }
 
 .hidden {
