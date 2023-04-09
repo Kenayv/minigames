@@ -1,10 +1,9 @@
 /*
-Version 0.0 of checkers game.
+Version 0.02 of checkers game.
 09.04.2023 | Jan Grosicki | https://github.com/kenayv
     
     * MORE INFO IN SCRIPTS.JS FILE
-*/ 
-
+*/
 
 html,
 body {
@@ -48,10 +47,6 @@ body {
     height: 50px;
 }
 
-.hidden {
-    display: none !important;
-}
-
 .checkers-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -91,18 +86,26 @@ body {
 
 .white-pawn {
     /* 
-        Source of the image: https://pngimg.com/image/69800
-        license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-        (free for non-commercial use)
+    Source of the image: https://pngimg.com/image/69800
+    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+    (free for non-commercial use)
     */
     background-image: url(assets/white-piece.png);
 }
 
 .red-pawn {
     /* 
-        Source of the image: https://pngimg.com/image/69800
-        license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-        (free for non-commercial use)
+    Source of the image: https://pngimg.com/image/69800
+    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+    (free for non-commercial use)
     */
     background-image: url(assets/red-piece.png);
+}
+
+.highlighted {
+    background-color: #525f22dd;
+}
+
+.hidden {
+    display: none !important;
 }
