@@ -27,10 +27,14 @@ To be added:
     * Money changes:
         - Should it be stored elsewhere?
         - What technology could I use to store it in external files?
-        - <button pass </button>
-        - <button Double-down </button>
+        - <button> pass </button>
+        - <button> Double-down </button>
     * RWD
     * getRandomCardUrl LOGIC SHOULD BE CHANGED - more info at the function
+
+    *  One very interesting and  ambitious thing would be to add posibility calculation 
+        - a simple window that can be opened and shows odds of each card being drawn and the win posibility
+    
 */
 
 //variable names are easier to read than hex

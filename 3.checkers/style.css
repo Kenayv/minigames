@@ -1,0 +1,108 @@
+/*
+Version 0.0 of checkers game.
+09.04.2023 | Jan Grosicki | https://github.com/kenayv
+    
+    * MORE INFO IN SCRIPTS.JS FILE
+*/ 
+
+
+html,
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: #44342c;
+}
+
+.checkers-board {
+    display: flex;
+    flex-wrap: wrap;
+    height: 640px;
+    width: 640px;
+    background-image: url("assets/chessboard-background.png");
+    background-size: cover;
+    box-shadow: 10px 10px #0009;
+    border: 2px solid black;
+    -webkit-user-drag: none;
+}
+
+.msg {
+    font-size: 48px;
+    position: absolute;
+    top: 350px;
+    width: 640px;
+    height: 120px;
+    background-color: #0004;
+    text-shadow: 1px 0px #fff, 0px 1px #fff, 0px -1px #fff, -1px 0 #fff, 2px 0px #fff, 0px 2px #fff, 0px -2px #fff,
+        -2px 0 #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.msg button {
+    font-size: 32px;
+    height: 50px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.checkers-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+}
+
+.tile {
+    width: 80px;
+    height: 80px;
+    font-size: 64px;
+    border-collapse: collapse;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.black {
+    background-color: #300b00cc;
+}
+
+.pawn {
+    width: 70px;
+    height: 70px;
+    background-size: contain;
+}
+
+.pawn:hover {
+    cursor: pointer;
+}
+
+.pawn::selection {
+    user-select: none;
+}
+
+.white-pawn {
+    /* 
+        Source of the image: https://pngimg.com/image/69800
+        license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+        (free for non-commercial use)
+    */
+    background-image: url(assets/white-piece.png);
+}
+
+.red-pawn {
+    /* 
+        Source of the image: https://pngimg.com/image/69800
+        license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+        (free for non-commercial use)
+    */
+    background-image: url(assets/red-piece.png);
+}
