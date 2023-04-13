@@ -193,7 +193,8 @@ function highlightLegalMoves(clickedCell) {
         if (position % 8 > 0) {
             //Check top left
             calculateMove(position, -9, clickedCell);
-        } else if (position % 8 < 7) {
+        }
+        if (position % 8 < 7) {
             //Check top right
             calculateMove(position, -7, clickedCell);
         }
@@ -202,7 +203,8 @@ function highlightLegalMoves(clickedCell) {
         if (position % 8 < 7) {
             //Check bottom right
             calculateMove(position, +9, clickedCell);
-        } else if (position % 8 > 0) {
+        }
+        if (position % 8 > 0) {
             //Check bottom Left
             calculateMove(position, +7, clickedCell);
         }
