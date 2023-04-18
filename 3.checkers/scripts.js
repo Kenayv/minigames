@@ -59,13 +59,16 @@ class Pawn {
         if (newCell.jumpOver) {
             this.capture(newCell.jumpOver);
             forcedMove = false;
-            /* TODO:
-                This function does not check for another moves if something has been captured
-            */
+            highlightLegalMoves(newCell);
+            if (!forcedMove) {
+                turn === "white" ? (turn = "red") : (turn = "white");
+                clearActivateCells();
+            }
+            if (forcedMove) {
+                clearNonForcingMoves();
+            }
+            return;
         }
-        /* FIXME:
-                Color shouldn't change if the piece has been captured and has another capture possible.
-        */
         turn === "white" ? (turn = "red") : (turn = "white");
     }
 }
@@ -172,6 +175,8 @@ function calculateMove(position, n, clickedCell) {
         TODO:
         Something should automatically check if there are any forced moves.
      */
+    if (!cells[position + n]) return; //TODO: change the piece to a queen
+
     if (
         cells[position + n].pawn &&
         cells[position + n * 2] &&
@@ -186,6 +191,7 @@ function calculateMove(position, n, clickedCell) {
 }
 
 function highlightLegalMoves(clickedCell) {
+    if (activeCells.length > 0) clearActivateCells();
     const position = cells.indexOf(clickedCell);
     if (clickedCell.pawn.color === "white") {
         //TODO:
@@ -222,7 +228,6 @@ function handleTileClick() {
         clearActivateCells();
         return;
     }
-    if (activeCells.length > 0) clearActivateCells();
     selectedPawn = this.pawn;
     highlightLegalMoves(this);
     if (forcedMove) clearNonForcingMoves();
