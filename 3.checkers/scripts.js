@@ -6,18 +6,13 @@ Version 0.03 of checkers game.
 
 Changelist:
     * refactoring of some code
-    * (Almost Working) Capturing
-    * Turns
+    * Fixed a bug, that indicated A/H line pieces to be captured and activated white tiles.
+    * Fixed a bug, where pieces searched for non-existing tiles on 1/8 lines
     
 Notes:
-    * NOT FINISHED!
-    * NOT FINISHED!
-    * NOT FINISHED!
     
 To be added:
     * RWD
-    * Fix calculateMove() function bug (described in comment near function definition)
-    * Pawns bug when they reach row 8 (row 1 for red, 8 for white)
     * Queens
     * capturing backwards
     * Fix forced moves
@@ -32,6 +27,8 @@ let gameRunning = false;
 let selectedPawn = undefined;
 let turn = "white";
 let forcedMove = false;
+let whitePawns = 0;
+let redPawns = 0;
 
 class Pawn {
     constructor(id, color, currentCell) {
@@ -40,6 +37,7 @@ class Pawn {
         this.color = color;
         this.selected = false;
         this.currentCell = currentCell;
+        this.queen = false;
     }
 
     getColor() {
@@ -47,13 +45,20 @@ class Pawn {
     }
 
     capture(cell) {
+        cell.pawn.color === "red" ? redPawns-- : whitePawns--;
         cell.removeChild(cell.pawn.id);
         delete cell.pawn;
+        checkForWins();
     }
 
     moveFromTo(lastCell, newCell) {
         lastCell.pawn = undefined;
         newCell.pawn = this;
+        if (
+            (this.color === "white" && cells.indexOf(newCell) <= 8) ||
+            (this.color === "red" && cells.indexOf(newCell) >= 56)
+        )
+            this.promoteToQueen();
         this.currentCell = newCell;
         newCell.appendChild(this.id);
         if (newCell.jumpOver) {
@@ -70,6 +75,14 @@ class Pawn {
             return;
         }
         turn === "white" ? (turn = "red") : (turn = "white");
+    }
+
+    promoteToQueen() {
+        //FIXME:
+        //FIXME:
+        this.queen = true;
+        this.color === "white" ? this.id.classList.remove("white-pawn") : this.id.classList.remove("red-pawn");
+        this.id.classList.add(`${this.color}-queen;`);
     }
 }
 
@@ -116,6 +129,7 @@ function initPawns() {
             }
         }
     }
+    redPawns = 12;
 
     //initializing white pawns on starting cells
     for (let i = 5; i < 8; i++) {
@@ -125,6 +139,7 @@ function initPawns() {
             }
         }
     }
+    whitePawns = 12;
 }
 
 function clearActivateCells() {
@@ -136,7 +151,6 @@ function clearActivateCells() {
 }
 
 // FIXME: !!! Very ugly implementation !!!
-
 // Clears moves that do not capture any piece
 function clearNonForcingMoves() {
     const tempActiveCells = [];
@@ -163,19 +177,10 @@ function activateCell(cell, jumpingOvercell = undefined) {
     activeCells[activeCells.length - 1].jumpOver = jumpingOvercell;
 }
 
-function calculateMove(position, n, clickedCell) {
-    /*  FIXME:
-        It and highlights white squares on H and A columns. It doesnt affect gameplay though. a pawn can't go on that square because those squares do not listen for clicks. The problem exists, because "if (position % 8 > 0)" checks if single-jumps are possible. there is however nothing that checks for double-jumps. new function can be added - calculateDoubleMove(), but that would be very inconvinient.
-
-            *I could check if n variable equals to something(ie 7) and move on from there.
-
-        FIXME:
-        If player doesn't click a pawn that can capture, the ForcedMove variable isn't changed and other moves are still possible.
-
-        TODO:
-        Something should automatically check if there are any forced moves.
-     */
-    if (!cells[position + n]) return; //TODO: change the piece to a queen
+function calculateBackwardMove(position, n, clickedCell) {
+    //FIXME: repeated code from calculateMove() function
+    //FIXME: this could be changed to "calculate forced move" and be used in calculateMove function!!!
+    if (!cells[position + n]) return;
 
     if (
         cells[position + n].pawn &&
@@ -183,8 +188,33 @@ function calculateMove(position, n, clickedCell) {
         !cells[position + n * 2].pawn &&
         cells[position + n].pawn.color != clickedCell.pawn.color
     ) {
-        activateCell(cells[position + n * 2], cells[position + n]);
-        forcedMove = true;
+        if (cells[position + n * 2].classList.contains("black")) {
+            activateCell(cells[position + n * 2], cells[position + n]);
+            forcedMove = true;
+        }
+    }
+}
+
+function calculateMove(position, n, clickedCell) {
+    /*  
+        FIXME:
+        If player doesn't click a pawn that can capture, the ForcedMove variable isn't changed and other moves are still possible.
+
+        TODO:
+        Something should automatically check if there are any forced moves.
+     */
+    if (!cells[position + n]) return;
+
+    if (
+        cells[position + n].pawn &&
+        cells[position + n * 2] &&
+        !cells[position + n * 2].pawn &&
+        cells[position + n].pawn.color != clickedCell.pawn.color
+    ) {
+        if (cells[position + n * 2].classList.contains("black")) {
+            activateCell(cells[position + n * 2], cells[position + n]);
+            forcedMove = true;
+        }
     } else if (!cells[position + n].pawn) {
         activateCell(cells[position + n]);
     }
@@ -194,25 +224,30 @@ function highlightLegalMoves(clickedCell) {
     if (activeCells.length > 0) clearActivateCells();
     const position = cells.indexOf(clickedCell);
     if (clickedCell.pawn.color === "white") {
-        //TODO:
-        //if's should check for backward captures as well.
         if (position % 8 > 0) {
             //Check top left
             calculateMove(position, -9, clickedCell);
+            //Check Bottom left
+            calculateBackwardMove(position, +7, clickedCell);
         }
         if (position % 8 < 7) {
             //Check top right
             calculateMove(position, -7, clickedCell);
+            //Check Bottom left
+            calculateBackwardMove(position, +9, clickedCell);
         }
     } else {
-        //if color === red
         if (position % 8 < 7) {
             //Check bottom right
             calculateMove(position, +9, clickedCell);
+            //Check top right
+            calculateBackwardMove(position, -7, clickedCell);
         }
         if (position % 8 > 0) {
             //Check bottom Left
             calculateMove(position, +7, clickedCell);
+            //Check top left
+            calculateBackwardMove(position, -9, clickedCell);
         }
     }
 }
@@ -240,6 +275,19 @@ function startGame() {
     gameRunning = true;
 }
 
+function checkForWins() {
+    gameRunning = false;
+    clearActivateCells();
+    selectedPawn = undefined;
+    if (!whitePawns) {
+        console.log("Red Won!");
+        return;
+    }
+    if (!redPawns) {
+        console.log("White Won!");
+        return;
+    }
+}
 // Main
 
 initBoard();

@@ -102,6 +102,24 @@ body {
     background-image: url(assets/red-piece.png);
 }
 
+.red-queen {
+    /* 
+    Source of the image: https://pngimg.com/image/69800
+    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+    (free for non-commercial use)
+    */
+    background-image: url(assets/red-queen.png);
+}
+
+.white-queen {
+    /* 
+    Source of the image: https://pngimg.com/image/69800
+    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
+    (free for non-commercial use)
+    */
+    background-image: url(assets/white-queen.png);
+}
+
 .highlighted {
     background-color: #525f22dd;
 }
