@@ -1,21 +1,24 @@
 "use strict";
 
 /*
-Version 0.03 of checkers game.
-10.04.2023 | Jan Grosicki | https://github.com/kenayv
+Version 0.04 of checkers game.
+22.04.2023 | Jan Grosicki | https://github.com/kenayv
 
 Changelist:
     * refactoring of some code
-    * Fixed a bug, that indicated A/H line pieces to be captured and activated white tiles.
-    * Fixed a bug, where pieces searched for non-existing tiles on 1/8 lines
+    * pieces capture backwards
+    * Correctly working queens! (might contain slight bugs)
+    * removed `background: url(pown-type)` code from .css file 
+        - it did absolutely nothing, pawns are imgs and have a `src` attribute.
     
 Notes:
     
 To be added:
     * RWD
-    * Queens
-    * capturing backwards
     * Fix forced moves
+    * Fix this ugly, redundant code!!!!
+    * comments
+    * fix queen png image
 */
 
 const startMsg = document.querySelector(".msg");
@@ -78,11 +81,8 @@ class Pawn {
     }
 
     promoteToQueen() {
-        //FIXME:
-        //FIXME:
         this.queen = true;
-        this.color === "white" ? this.id.classList.remove("white-pawn") : this.id.classList.remove("red-pawn");
-        this.id.classList.add(`${this.color}-queen;`);
+        this.id.setAttribute("src", `assets/${this.color}-queen.png`);
     }
 }
 
@@ -115,7 +115,7 @@ function placePawn(cell, color) {
 
     const newPawn = document.createElement("img");
     newPawn.setAttribute("src", `assets/${color}-piece.png`);
-    newPawn.setAttribute("class", `pawn ${color}-pawn`);
+    newPawn.setAttribute("class", `pawn`);
     cell.pawn = new Pawn(newPawn, color, cell);
     cell.appendChild(newPawn);
 }
@@ -203,7 +203,7 @@ function calculateMove(position, n, clickedCell) {
         TODO:
         Something should automatically check if there are any forced moves.
      */
-    if (!cells[position + n]) return;
+    if (!cells[position + n] || !cells[position + n].classList.contains("black")) return;
 
     if (
         cells[position + n].pawn &&
@@ -223,31 +223,44 @@ function calculateMove(position, n, clickedCell) {
 function highlightLegalMoves(clickedCell) {
     if (activeCells.length > 0) clearActivateCells();
     const position = cells.indexOf(clickedCell);
-    if (clickedCell.pawn.color === "white") {
-        if (position % 8 > 0) {
-            //Check top left
-            calculateMove(position, -9, clickedCell);
-            //Check Bottom left
-            calculateBackwardMove(position, +7, clickedCell);
+    const topLeft = -9;
+    const bottomLeft = 7;
+    const topRight = -7;
+    const bottomRight = 9;
+    if (clickedCell.pawn.queen === false) {
+        //FIXME: ugly, redundant code
+        if (clickedCell.pawn.color === "white") {
+            calculateBackwardMove(position, bottomLeft, clickedCell);
+            calculateBackwardMove(position, bottomRight, clickedCell);
+            calculateMove(position, topLeft, clickedCell);
+            calculateMove(position, topRight, clickedCell);
+        } else {
+            calculateBackwardMove(position, topRight, clickedCell);
+            calculateBackwardMove(position, topLeft, clickedCell);
+            calculateMove(position, bottomRight, clickedCell);
+            calculateMove(position, bottomLeft, clickedCell);
         }
-        if (position % 8 < 7) {
-            //Check top right
-            calculateMove(position, -7, clickedCell);
-            //Check Bottom left
-            calculateBackwardMove(position, +9, clickedCell);
+    } else if (clickedCell.pawn.queen === true) {
+        //FIXME: ugly, redundant code
+        let queenPos = position;
+        for (; cells[queenPos]; queenPos += bottomLeft) {
+            calculateMove(queenPos, bottomLeft, clickedCell);
+            if (!cells[queenPos + bottomLeft] || cells[queenPos + bottomLeft].pawn) break;
         }
-    } else {
-        if (position % 8 < 7) {
-            //Check bottom right
-            calculateMove(position, +9, clickedCell);
-            //Check top right
-            calculateBackwardMove(position, -7, clickedCell);
+        queenPos = position;
+        for (; cells[queenPos]; queenPos += bottomRight) {
+            calculateMove(queenPos, bottomRight, clickedCell);
+            if (!cells[queenPos + bottomRight] || cells[queenPos + bottomRight].pawn) break;
         }
-        if (position % 8 > 0) {
-            //Check bottom Left
-            calculateMove(position, +7, clickedCell);
-            //Check top left
-            calculateBackwardMove(position, -9, clickedCell);
+        queenPos = position;
+        for (; cells[queenPos]; queenPos += topLeft) {
+            calculateMove(queenPos, topLeft, clickedCell);
+            if (!cells[queenPos + topLeft] || cells[queenPos + topLeft].pawn) break;
+        }
+        queenPos = position;
+        for (; cells[queenPos]; queenPos += topRight) {
+            calculateMove(queenPos, topRight, clickedCell);
+            if (!cells[queenPos + topRight] || cells[queenPos + topRight].pawn) break;
         }
     }
 }

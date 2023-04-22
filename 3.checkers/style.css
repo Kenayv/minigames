@@ -1,6 +1,6 @@
 /*
-Version 0.03 of checkers game.
-10.04.2023 | Jan Grosicki | https://github.com/kenayv
+Version 0.04 of checkers game.
+22.04.2023 | Jan Grosicki | https://github.com/kenayv
     
     * MORE INFO IN SCRIPTS.JS FILE
 */
@@ -82,42 +82,6 @@ body {
 
 .pawn::selection {
     user-select: none;
-}
-
-.white-pawn {
-    /* 
-    Source of the image: https://pngimg.com/image/69800
-    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-    (free for non-commercial use)
-    */
-    background-image: url(assets/white-piece.png);
-}
-
-.red-pawn {
-    /* 
-    Source of the image: https://pngimg.com/image/69800
-    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-    (free for non-commercial use)
-    */
-    background-image: url(assets/red-piece.png);
-}
-
-.red-queen {
-    /* 
-    Source of the image: https://pngimg.com/image/69800
-    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-    (free for non-commercial use)
-    */
-    background-image: url(assets/red-queen.png);
-}
-
-.white-queen {
-    /* 
-    Source of the image: https://pngimg.com/image/69800
-    license: Pngimg.com License - Attribution-NonCommercial 4.0 International
-    (free for non-commercial use)
-    */
-    background-image: url(assets/white-queen.png);
 }
 
 .highlighted {
