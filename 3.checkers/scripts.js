@@ -26,6 +26,13 @@ const btnStart = document.getElementById("btn-start");
 const checkersBoard = document.querySelector(".checkers-wrapper");
 const cells = [];
 const activeCells = [];
+
+//variables to easily navigate pawn moves
+const topLeft = -9;
+const bottomLeft = 7;
+const topRight = -7;
+const bottomRight = 9;
+
 let gameRunning = false;
 let selectedPawn = undefined;
 let turn = "white";
@@ -71,13 +78,12 @@ class Pawn {
             if (!forcedMove) {
                 turn === "white" ? (turn = "red") : (turn = "white");
                 clearActivateCells();
-            }
-            if (forcedMove) {
+            } else {
                 clearNonForcingMoves();
             }
-            return;
+        } else {
+            turn === "white" ? (turn = "red") : (turn = "white");
         }
-        turn === "white" ? (turn = "red") : (turn = "white");
     }
 
     promoteToQueen() {
@@ -177,32 +183,16 @@ function activateCell(cell, jumpingOvercell = undefined) {
     activeCells[activeCells.length - 1].jumpOver = jumpingOvercell;
 }
 
-function calculateBackwardMove(position, n, clickedCell) {
-    //FIXME: repeated code from calculateMove() function
-    //FIXME: this could be changed to "calculate forced move" and be used in calculateMove function!!!
-    if (!cells[position + n]) return;
+function calculateForcedMoves(position, clickedCell) {
+    calculateMove(position, bottomLeft, clickedCell);
+    calculateMove(position, bottomRight, clickedCell);
+    calculateMove(position, topRight, clickedCell);
+    calculateMove(position, topLeft, clickedCell);
 
-    if (
-        cells[position + n].pawn &&
-        cells[position + n * 2] &&
-        !cells[position + n * 2].pawn &&
-        cells[position + n].pawn.color != clickedCell.pawn.color
-    ) {
-        if (cells[position + n * 2].classList.contains("black")) {
-            activateCell(cells[position + n * 2], cells[position + n]);
-            forcedMove = true;
-        }
-    }
+    forcedMove ? clearNonForcingMoves() : clearActivateCells();
 }
 
 function calculateMove(position, n, clickedCell) {
-    /*  
-        FIXME:
-        If player doesn't click a pawn that can capture, the ForcedMove variable isn't changed and other moves are still possible.
-
-        TODO:
-        Something should automatically check if there are any forced moves.
-     */
     if (!cells[position + n] || !cells[position + n].classList.contains("black")) return;
 
     if (
@@ -223,20 +213,13 @@ function calculateMove(position, n, clickedCell) {
 function highlightLegalMoves(clickedCell) {
     if (activeCells.length > 0) clearActivateCells();
     const position = cells.indexOf(clickedCell);
-    const topLeft = -9;
-    const bottomLeft = 7;
-    const topRight = -7;
-    const bottomRight = 9;
     if (clickedCell.pawn.queen === false) {
-        //FIXME: ugly, redundant code
+        calculateForcedMoves(position, clickedCell);
+        if(forcedMove) return;
         if (clickedCell.pawn.color === "white") {
-            calculateBackwardMove(position, bottomLeft, clickedCell);
-            calculateBackwardMove(position, bottomRight, clickedCell);
             calculateMove(position, topLeft, clickedCell);
             calculateMove(position, topRight, clickedCell);
         } else {
-            calculateBackwardMove(position, topRight, clickedCell);
-            calculateBackwardMove(position, topLeft, clickedCell);
             calculateMove(position, bottomRight, clickedCell);
             calculateMove(position, bottomLeft, clickedCell);
         }
