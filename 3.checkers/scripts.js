@@ -17,10 +17,11 @@ To be added:
     * RWD
     * Fix forced moves
     * Fix this ugly, redundant code!!!!
-    * comments
     * fix queen png image
+    
 */
 
+//DOM elements
 const startMsg = document.querySelector(".msg");
 const btnStart = document.getElementById("btn-start");
 const checkersBoard = document.querySelector(".checkers-wrapper");
@@ -33,6 +34,7 @@ const bottomLeft = 7;
 const topRight = -7;
 const bottomRight = 9;
 
+//global variables needed for the game to run.
 let gameRunning = false;
 let selectedPawn = undefined;
 let turn = "white";
@@ -40,40 +42,49 @@ let forcedMove = false;
 let whitePawns = 0;
 let redPawns = 0;
 
+//Class used to represent a piece on the board.
 class Pawn {
-    constructor(id, color, currentCell) {
-        if (!id || !color || !currentCell) throw Error("bad Pawn Constructor!");
-        this.id = id;
+    constructor(elem, color, currentCell) {
+        if (!elem || !color || !currentCell) throw Error("bad Pawn Constructor!");
+        this.elem = elem;
         this.color = color;
         this.selected = false;
         this.currentCell = currentCell;
         this.queen = false;
+        this.elem.setAttribute("src", `assets/${color}-piece.png`);
+        this.elem.setAttribute("class", `pawn`);
     }
 
-    getColor() {
-        return this.color;
-    }
-
-    capture(cell) {
+    _capture(cell) {
         cell.pawn.color === "red" ? redPawns-- : whitePawns--;
-        cell.removeChild(cell.pawn.id);
+        cell.removeChild(cell.pawn.elem);
         delete cell.pawn;
         checkForWins();
     }
 
+    _promoteToQueen() {
+        this.queen = true;
+        this.elem.setAttribute("src", `assets/${this.color}-queen.png`);
+    }
+
+    //Handles the logic of moving a pawn from one square to another.
     moveFromTo(lastCell, newCell) {
         lastCell.pawn = undefined;
         newCell.pawn = this;
+        //if the piece is on the 8th (1st) rank and isn't a queen.
         if (
-            (this.color === "white" && cells.indexOf(newCell) <= 8) ||
-            (this.color === "red" && cells.indexOf(newCell) >= 56)
+            this.queen === false &&
+            ((this.color === "white" && cells.indexOf(newCell) <= 8) ||
+                (this.color === "red" && cells.indexOf(newCell) >= 56))
         )
-            this.promoteToQueen();
+            this._promoteToQueen();
+
         this.currentCell = newCell;
-        newCell.appendChild(this.id);
+        newCell.appendChild(this.elem);
         if (newCell.jumpOver) {
-            this.capture(newCell.jumpOver);
+            this._capture(newCell.jumpOver);
             forcedMove = false;
+            //TODO: i believe it should be calculateForcedMoves()
             highlightLegalMoves(newCell);
             if (!forcedMove) {
                 turn === "white" ? (turn = "red") : (turn = "white");
@@ -85,16 +96,10 @@ class Pawn {
             turn === "white" ? (turn = "red") : (turn = "white");
         }
     }
-
-    promoteToQueen() {
-        this.queen = true;
-        this.id.setAttribute("src", `assets/${this.color}-queen.png`);
-    }
 }
 
-//create 64 elements, inject them into checkers-wrapper HTML element
+//create 64 elements, inject them into 'checkers-wrapper' HTML element
 function initBoard() {
-    //for I is nested in for J to make chessboard pattern
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             const newCell = document.createElement("div");
@@ -114,14 +119,12 @@ function initBoard() {
     }
 }
 
-//places a pawn element inside of a checkers cell.
+//places a pawn element inside of a square.
 function placePawn(cell, color) {
     if (color !== "white" && color !== "red") throw Error("placePawn: Bad Color!");
     if (!cell) throw Error("placePawn: Bad cell!");
 
     const newPawn = document.createElement("img");
-    newPawn.setAttribute("src", `assets/${color}-piece.png`);
-    newPawn.setAttribute("class", `pawn`);
     cell.pawn = new Pawn(newPawn, color, cell);
     cell.appendChild(newPawn);
 }
@@ -184,6 +187,8 @@ function activateCell(cell, jumpingOvercell = undefined) {
 }
 
 function calculateForcedMoves(position, clickedCell) {
+    //TODO: this function should look for forced moves all over the board
+
     calculateMove(position, bottomLeft, clickedCell);
     calculateMove(position, bottomRight, clickedCell);
     calculateMove(position, topRight, clickedCell);
@@ -201,6 +206,7 @@ function calculateMove(position, n, clickedCell) {
         !cells[position + n * 2].pawn &&
         cells[position + n].pawn.color != clickedCell.pawn.color
     ) {
+        //if a cell can be captured, and the next cell isn't occupied
         if (cells[position + n * 2].classList.contains("black")) {
             activateCell(cells[position + n * 2], cells[position + n]);
             forcedMove = true;
@@ -210,12 +216,13 @@ function calculateMove(position, n, clickedCell) {
     }
 }
 
+//FIXME: ugly implementation
 function highlightLegalMoves(clickedCell) {
     if (activeCells.length > 0) clearActivateCells();
     const position = cells.indexOf(clickedCell);
     if (clickedCell.pawn.queen === false) {
         calculateForcedMoves(position, clickedCell);
-        if(forcedMove) return;
+        if (forcedMove) return;
         if (clickedCell.pawn.color === "white") {
             calculateMove(position, topLeft, clickedCell);
             calculateMove(position, topRight, clickedCell);
@@ -272,14 +279,17 @@ function startGame() {
 }
 
 function checkForWins() {
-    gameRunning = false;
-    clearActivateCells();
-    selectedPawn = undefined;
     if (!whitePawns) {
+        selectedPawn = undefined;
+        clearActivateCells();
+        gameRunning = false;
         console.log("Red Won!");
         return;
     }
     if (!redPawns) {
+        selectedPawn = undefined;
+        clearActivateCells();
+        gameRunning = false;
         console.log("White Won!");
         return;
     }
