@@ -2,24 +2,29 @@
 
 /*
 Version 0.05 of checkers game.
-18.06.2023 | Jan Grosicki | https://github.com/kenayv
+19.06.2023 | Jan Grosicki | https://github.com/kenayv
 
 Changelist:
-    * Refactoring
-    * Forced moves are working correctly now (I think)
-    * fixed queen png image
-    * fixed some redundant code
+    * fake Chatbox, scores and surrender/restart buttons(NOT WORKING)
+    * Working score
     
 Notes:
     
 To be added:
     * RWD
     * Fix this ugly code
+    * simple ranking system (after learning PHP)
+    * fix buttons
+    * make chat work
+    
 */
 
 const startMsg = document.querySelector(".msg");
 const btnStart = document.getElementById("btn-start");
 const checkersBoard = document.querySelector(".checkers-wrapper");
+const msgDisplayed = document.querySelector(".msg-displayed");
+const scoreBoardWhite = document.querySelector(".white-score-msg");
+const scoreBoardRed = document.querySelector(".red-score-msg");
 
 const colorRed = "red";
 const colorWhite = "white";
@@ -38,6 +43,9 @@ let turn = colorWhite;
 let forcedMove = false;
 let whitePawns = 0;
 let redPawns = 0;
+
+let scoreWhite = 0;
+let scoreRed = 0;
 
 //Class used to represent a piece on the board.
 class Pawn {
@@ -202,22 +210,22 @@ function calculateForcedMoves() {
     forcedMove ? clearNonForcingMoves() : clearActiveCells();
 }
 
-function calculateMove(position, n, clickedCell) {
-    if (!cells[position + n] || !cells[position + n].classList.contains("black")) return;
+function calculateMove(position, direction, clickedCell) {
+    if (!cells[position + direction] || !cells[position + direction].classList.contains("black")) return;
 
     if (
-        cells[position + n].pawn &&
-        cells[position + n * 2] &&
-        !cells[position + n * 2].pawn &&
-        cells[position + n].pawn.color != clickedCell.pawn.color
+        cells[position + direction].pawn &&
+        cells[position + direction * 2] &&
+        !cells[position + direction * 2].pawn &&
+        cells[position + direction].pawn.color != clickedCell.pawn.color
     ) {
         //if a cell can be captured, and the next cell isn't occupied
-        if (cells[position + n * 2].classList.contains("black")) {
-            activateCell(cells[position + n * 2], cells[position + n]);
+        if (cells[position + direction * 2].classList.contains("black")) {
+            activateCell(cells[position + direction * 2], cells[position + direction]);
             forcedMove = true;
         }
-    } else if (!cells[position + n].pawn) {
-        activateCell(cells[position + n]);
+    } else if (!cells[position + direction].pawn) {
+        activateCell(cells[position + direction]);
     }
 }
 
@@ -236,11 +244,10 @@ function calculateQueenMoves(clickedCell) {
     checkQueenMove(queenPos, topRight, clickedCell);
 }
 
-//FIXME: ugly implementation
 function highlightLegalMoves(clickedCell) {
     if (activeCells.length > 0) clearActiveCells();
     const position = cells.indexOf(clickedCell);
-    if (clickedCell.pawn.queen === false) {
+    if (!clickedCell.pawn.queen) {
         checkMoves(clickedCell);
         forcedMove ? clearNonForcingMoves() : clearActiveCells();
         if (forcedMove) return;
@@ -251,7 +258,7 @@ function highlightLegalMoves(clickedCell) {
             calculateMove(position, bottomRight, clickedCell);
             calculateMove(position, bottomLeft, clickedCell);
         }
-    } else if (clickedCell.pawn.queen === true) {
+    } else {
         calculateQueenMoves(clickedCell);
     }
 }
@@ -280,19 +287,19 @@ function startGame() {
 }
 
 function checkForWins() {
+    selectedPawn = undefined;
+    clearActiveCells();
+    gameRunning = false;
     if (!whitePawns) {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        console.log("Red Won!");
-        return;
-    }
-    if (!redPawns) {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        console.log("White Won!");
-        return;
+        scoreRed++;
+        scoreBoardRed.textContent = scoreRed;
+        msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
+        startMsg.classList.remove("hidden");
+    } else if (!redPawns) {
+        scoreWhite++;
+        scoreBoardWhite.textContent = scoreWhite;
+        msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
+        startMsg.classList.remove("hidden");
     }
 }
 

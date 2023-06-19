@@ -28,6 +28,37 @@ body {
     -webkit-user-drag: none;
 }
 
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #0004;
+    width: 280px;
+    height: 640px;
+    margin-left: 24px;
+}
+
+.scores {
+    display: flex;
+    width: 100%;
+    height: 64px;
+}
+
+.score {
+    text-align: center;
+    font-size: 3rem;
+    width: 50%;
+}
+
+.white-score {
+    background-color: white;
+    color: #cc241c;
+}
+
+.red-score {
+    background-color: #cc241c;
+    color: white;
+}
+
 .msg {
     font-size: 48px;
     position: absolute;
@@ -52,6 +83,55 @@ body {
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
+}
+
+.buttons {
+    background-color: #0003;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 32px;
+    vertical-align: bottom;
+}
+
+.buttons > button {
+    margin-top: 4px;
+    height: 24px;
+    display: flex;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
+.spacer {
+    height: 50%;
+}
+
+.message-box {
+    padding: 2.5%;
+    display: flex;
+    height: 85%;
+    justify-content: baseline;
+    flex-direction: column;
+    color: #bbb;
+}
+
+.usr-name {
+    font-weight: 800;
+    color: #8d8;
+}
+
+.chat > input {
+    margin: 0 auto;
+    height: 5%;
+    width: 90%;
+}
+
+.usr-msg {
+    margin: 0.5% 0%;
 }
 
 .tile {

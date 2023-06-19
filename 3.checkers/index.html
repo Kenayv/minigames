@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <!--
-        Version 0.04 of checkers game.
-        22.04.2023 | Jan Grosicki | https://github.com/kenayv
+        Version 0.06 of checkers game.
+        19.06.2023 | Jan Grosicki | https://github.com/kenayv
             
         * MORE INFO IN SCRIPTS.JS FILE
     -->
@@ -18,7 +18,7 @@
     <body>
         <div class="checkers-board">
             <div class="msg hidden">
-                <p>Press <button id="btn-start">start</button> to play!</p>
+                <p class="msg-displayed">Press <button id="btn-start">start</button> to play!</p>
             </div>
             <main class="checkers-wrapper">
                 <!-- 
@@ -26,6 +26,27 @@
                 -->
             </main>
         </div>
+        <aside class="right-panel">
+            <div class="scores">
+                <div class="score white-score"><span class="white-score-msg"> 0 </span></div>
+                <div class="score red-score"><span class="red-score-msg"> 0 </span></div>
+            </div>
+            <div class="spacer"></div>
+            <div class="buttons">
+                <button class="restart-button">restart</button>
+                <button class="surrender-button">surrender</button>
+            </div>
+            <div class="chat">
+                <div class="message-box">
+                    <span class="usr-msg"><span class="usr-name">Lovir88</span>: Cringe </span>
+                    <span class="usr-msg"><span class="usr-name">Lovir88</span>: XD </span>
+                    <span class="usr-msg"><span class="usr-name">Lovir88</span>: say samira </span>
+                    <span class="usr-msg"><span class="usr-name">Lovir88</span>: prosze cie </span>
+                </div>
+                <input type="text" placeholder="ff15 go next shit team                              >" />
+            </div>
+        </aside>
+
         <script src="scripts.js"></script>
     </body>
 </html>
