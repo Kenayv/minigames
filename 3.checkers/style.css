@@ -1,5 +1,5 @@
 /*
-Version 0.04 of checkers game.
+Version 0.07 of checkers game.
 22.04.2023 | Jan Grosicki | https://github.com/kenayv
     
     * MORE INFO IN SCRIPTS.JS FILE
@@ -59,7 +59,7 @@ body {
     color: white;
 }
 
-.msg {
+.msg-box {
     font-size: 48px;
     position: absolute;
     top: 350px;
@@ -73,7 +73,7 @@ body {
     justify-content: center;
 }
 
-.msg button {
+.msg-box button {
     font-size: 32px;
     height: 50px;
 }

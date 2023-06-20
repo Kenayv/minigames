@@ -1,26 +1,28 @@
 "use strict";
 
 /*
-Version 0.05 of checkers game.
+Version 0.07 of checkers game.
 19.06.2023 | Jan Grosicki | https://github.com/kenayv
 
 Changelist:
-    * fake Chatbox, scores and surrender/restart buttons(NOT WORKING)
-    * Working score
-    
+    * startMsg renamed, more accordingly, to  msgBox
+    * buttons working
+
 Notes:
     
 To be added:
     * RWD
     * Fix this ugly code
     * simple ranking system (after learning PHP)
-    * fix buttons
     * make chat work
+    * "are you sure?" pop-up when surrendering
     
 */
 
-const startMsg = document.querySelector(".msg");
+const msgBox = document.querySelector(".msg-box");
 const btnStart = document.getElementById("btn-start");
+const btnSurrender = document.getElementById("btn-surrender");
+const btnRestart = document.getElementById("btn-restart");
 const checkersBoard = document.querySelector(".checkers-wrapper");
 const msgDisplayed = document.querySelector(".msg-displayed");
 const scoreBoardWhite = document.querySelector(".white-score-msg");
@@ -279,32 +281,80 @@ function handleTileClick() {
     if (forcedMove) clearNonForcingMoves();
 }
 
+function clearPawns() {
+    for (const cell of cells) {
+        cell.pawn = undefined;
+        while (cell.firstChild) {
+            cell.removeChild(cell.firstChild);
+        }
+    }
+}
+
 function startGame() {
     initPawns();
-    startMsg.classList.add("hidden");
+    msgBox.classList.add("hidden");
     turn = colorWhite;
     gameRunning = true;
 }
 
-function checkForWins() {
-    selectedPawn = undefined;
-    clearActiveCells();
+function restartGame() {
+    if (!gameRunning) return;
     gameRunning = false;
-    if (!whitePawns) {
+    selectedPawn = undefined;
+    forcedMove = false;
+    whitePawns = 0;
+    redPawns = 0;
+    clearActiveCells();
+    clearPawns();
+    startGame();
+}
+
+function surrenderGame() {
+    if (!gameRunning) return;
+
+    if (turn === colorWhite) {
+        selectedPawn = undefined;
+        clearActiveCells();
+        gameRunning = false;
         scoreRed++;
         scoreBoardRed.textContent = scoreRed;
         msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
-        startMsg.classList.remove("hidden");
-    } else if (!redPawns) {
+        msgBox.classList.remove("hidden");
+    } else {
+        selectedPawn = undefined;
+        clearActiveCells();
+        gameRunning = false;
         scoreWhite++;
         scoreBoardWhite.textContent = scoreWhite;
         msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
-        startMsg.classList.remove("hidden");
+        msgBox.classList.remove("hidden");
+    }
+}
+
+function checkForWins() {
+    if (!whitePawns) {
+        selectedPawn = undefined;
+        clearActiveCells();
+        gameRunning = false;
+        scoreRed++;
+        scoreBoardRed.textContent = scoreRed;
+        msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
+        msgBox.classList.remove("hidden");
+    } else if (!redPawns) {
+        selectedPawn = undefined;
+        clearActiveCells();
+        gameRunning = false;
+        scoreWhite++;
+        scoreBoardWhite.textContent = scoreWhite;
+        msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
+        msgBox.classList.remove("hidden");
     }
 }
 
 // Main
 
 initBoard();
-startMsg.classList.remove("hidden");
+msgBox.classList.remove("hidden");
 btnStart.addEventListener("click", startGame);
+btnRestart.addEventListener("click", restartGame);
+btnSurrender.addEventListener("click", surrenderGame);
