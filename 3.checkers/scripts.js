@@ -2,7 +2,7 @@
 
 /*
 Version 0.07 of checkers game.
-19.06.2023 | Jan Grosicki | https://github.com/kenayv
+28.06.2023 | Jan Grosicki | https://github.com/kenayv
 
 Changelist:
     * startMsg renamed, more accordingly, to  msgBox
