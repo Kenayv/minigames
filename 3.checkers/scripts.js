@@ -1,12 +1,14 @@
 "use strict";
 
 /*
-Version 0.07 of checkers game.
-28.06.2023 | Jan Grosicki | https://github.com/kenayv
+Version 1.01 of checkers game.
+FIRST READY TO PLAY VERSION
+30.06.2023 | Jan Grosicki | https://github.com/kenayv
 
 Changelist:
-    * startMsg renamed, more accordingly, to  msgBox
-    * buttons working
+    * added victory() function
+    * working points and game is restarting after victory
+    * chat finally working
 
 Notes:
     
@@ -14,7 +16,6 @@ To be added:
     * RWD
     * Fix this ugly code
     * simple ranking system (after learning PHP)
-    * make chat work
     * "are you sure?" pop-up when surrendering
     
 */
