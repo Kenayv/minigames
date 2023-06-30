@@ -110,13 +110,20 @@ body {
     height: 50%;
 }
 
-.message-box {
+#message-box {
     padding: 2.5%;
     display: flex;
     height: 85%;
     justify-content: baseline;
     flex-direction: column;
     color: #bbb;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#btn-sendMessage {
+    width: 20%;
+    text-align: center;
 }
 
 .usr-name {
@@ -124,10 +131,14 @@ body {
     color: #8d8;
 }
 
-.chat > input {
-    margin: 0 auto;
-    height: 5%;
-    width: 90%;
+#chat-input {
+    width: 80%;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .usr-msg {

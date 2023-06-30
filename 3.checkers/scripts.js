@@ -18,11 +18,13 @@ To be added:
     * "are you sure?" pop-up when surrendering
     
 */
+let userName = "Lovir88"; //DEFAULT VALUE, TO BE CHANGED
 
 const msgBox = document.querySelector(".msg-box");
 const btnStart = document.getElementById("btn-start");
 const btnSurrender = document.getElementById("btn-surrender");
 const btnRestart = document.getElementById("btn-restart");
+const btnSendMessage = document.getElementById("btn-sendMessage");
 const checkersBoard = document.querySelector(".checkers-wrapper");
 const msgDisplayed = document.querySelector(".msg-displayed");
 const scoreBoardWhite = document.querySelector(".white-score-msg");
@@ -108,6 +110,12 @@ class Pawn {
         else this.justPromoted = false;
     }
 }
+
+/* https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+    use it as:
+    await sleep(<duration>);
+*/
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 //create 64 elements, inject them into 'checkers-wrapper' HTML element
 function initBoard() {
@@ -313,42 +321,67 @@ function surrenderGame() {
     if (!gameRunning) return;
 
     if (turn === colorWhite) {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        scoreRed++;
-        scoreBoardRed.textContent = scoreRed;
-        msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
-        msgBox.classList.remove("hidden");
+        victory(colorRed);
     } else {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        scoreWhite++;
-        scoreBoardWhite.textContent = scoreWhite;
-        msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
-        msgBox.classList.remove("hidden");
+        victory(colorWhite);
     }
+}
+
+async function victory(color) {
+    selectedPawn = undefined;
+    clearActiveCells();
+    gameRunning = false;
+
+    if (color === colorRed) {
+        scoreRed++;
+        msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
+    } else {
+        scoreWhite++;
+        msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
+    }
+
+    scoreBoardRed.textContent = scoreRed;
+    scoreBoardWhite.textContent = scoreWhite;
+    msgBox.classList.remove("hidden");
+
+    await sleep(3500);
+
+    for (let i = 5; i > 0; i--) {
+        let timer = `Restarting in: ${i} second`;
+        if (i > 1) timer += "s";
+        msgDisplayed.textContent = timer;
+        msgDisplayed.textContent = await sleep(1000);
+    }
+    gameRunning = true; //so restartgame wont glich-out
+    restartGame();
 }
 
 function checkForWins() {
     if (!whitePawns) {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        scoreRed++;
-        scoreBoardRed.textContent = scoreRed;
-        msgDisplayed.textContent = `Red Won! | ${scoreRed} - ${scoreWhite}`;
-        msgBox.classList.remove("hidden");
+        victory(colorRed);
     } else if (!redPawns) {
-        selectedPawn = undefined;
-        clearActiveCells();
-        gameRunning = false;
-        scoreWhite++;
-        scoreBoardWhite.textContent = scoreWhite;
-        msgDisplayed.textContent = `White Won! | ${scoreWhite} - ${scoreRed}`;
-        msgBox.classList.remove("hidden");
+        victory(colorWhite);
     }
+}
+
+function sendMessage() {
+    const chatInputContent = document.getElementById("chat-input");
+    let usrMsgValue = document.createTextNode(`:  ${chatInputContent.value}`);
+    const usrNameSpan = document.createElement("SPAN");
+    const usrNameElem = document.createTextNode(userName);
+    const msgSpan = document.createElement("SPAN");
+    const chatBox = document.getElementById("message-box");
+
+    if (chatInputContent.value === "") return;
+
+    usrNameSpan.classList.add("usr-name");
+    usrNameSpan.appendChild(usrNameElem);
+    msgSpan.classList.add("usr-msg");
+    msgSpan.appendChild(usrNameSpan);
+    msgSpan.appendChild(usrMsgValue);
+    chatBox.appendChild(msgSpan);
+
+    chatInputContent.value = "";
 }
 
 // Main
@@ -358,3 +391,4 @@ msgBox.classList.remove("hidden");
 btnStart.addEventListener("click", startGame);
 btnRestart.addEventListener("click", restartGame);
 btnSurrender.addEventListener("click", surrenderGame);
+btnSendMessage.addEventListener("click", sendMessage);
